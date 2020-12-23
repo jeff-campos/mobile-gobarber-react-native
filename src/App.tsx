@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import 'react-native-gesture-handler';
+
+import React from 'react';
+import { View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
+import Routes from './routes';
 
 const App: React.FC = () => {
-  const [teste, updateTeste] = useState(false);
-
-  useEffect(() => {
-    if (teste) {
-      updateTeste(state => !state);
-    }
-  }, [teste]);
-
   return (
-    <View>
-      <Text>Hello World</Text>
-    </View>
+    <NavigationContainer>
+      <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+      <View style={{ flex: 1, backgroundColor: '#312e38' }}>
+        <Routes />
+      </View>
+    </NavigationContainer>
   );
 };
 
