@@ -28,9 +28,9 @@ const SignUp: React.FC = () => {
               <Title>Faça seu Logon</Title>
             </View>
 
-            <Input name="name" iconName="user" placeholder="Nome" />
-            <Input name="email" iconName="mail" placeholder="E-mail" />
-            <Input name="password" iconName="lock" placeholder="Senha" />
+            <Input name="name" icon="user" placeholder="Nome" />
+            <Input name="email" icon="mail" placeholder="E-mail" />
+            <Input name="password" icon="lock" placeholder="Senha" />
 
             <Button onPress={() => {}}>Entrar</Button>
           </Container>
