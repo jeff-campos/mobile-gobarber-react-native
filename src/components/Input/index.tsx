@@ -1,5 +1,7 @@
 import React, {
   useEffect,
+  useCallback,
+  useState,
   useRef,
   useImperativeHandle,
   forwardRef,
@@ -19,13 +21,16 @@ interface InputValuereference {
 }
 
 interface InputRef {
-  focus: void;
+  focus: HTMLInputElement;
 }
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
   { name, icon, ...rest },
   ref,
 ) => {
+  const [isFocus, updateIsFocus] = useState(false);
+  const [isFilled, updateIsFilled] = useState(false);
+
   const { registerField, defaultValue = '', fieldName, error } = useField(name);
 
   const inputElementRef = useRef<any>(null);
@@ -53,9 +58,22 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     });
   }, [fieldName, registerField]);
 
+  const handleInputFocus = useCallback(() => {
+    updateIsFocus(true);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    updateIsFocus(false);
+    updateIsFilled(!!inputValueRef.current.value);
+  }, []);
+
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#666360" />
+    <Container isFocus={isFocus}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocus || isFilled ? '#FF9000' : '#666360'}
+      />
 
       <TextInput
         ref={inputElementRef}
@@ -65,6 +83,8 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         onChangeText={(value: string) => {
           inputValueRef.current.value = value;
         }}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         {...rest}
       />
     </Container>
